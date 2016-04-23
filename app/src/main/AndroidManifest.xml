@@ -15,6 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RestListActivity" />
+        <activity android:name=".RestInfoActivity"></activity>
     </application>
 
 </manifest>

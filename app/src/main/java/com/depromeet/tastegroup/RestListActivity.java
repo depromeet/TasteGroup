@@ -2,14 +2,11 @@ package com.depromeet.tastegroup;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -18,14 +15,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class RestListActivity extends AppCompatActivity {
+    public static final String FOOD_TYPE = "restNo";
+
     public class Listviewitem {
-        private int icon;
+        private String text;
 
-        public int getIcon(){return icon;}
+        public String getText(){return text;}
 
-        public Listviewitem(int icon){
-            this.icon=icon;
+        public Listviewitem(String text){
+            this.text=text;
         }
     }
     private class ListviewAdapter extends BaseAdapter {
@@ -50,38 +49,41 @@ public class MainActivity extends AppCompatActivity {
                 convertView=inflater.inflate(layout,parent,false);
             }
             Listviewitem listviewitem=data.get(position);
-            ImageView icon = (ImageView)convertView.findViewById(R.id.list_img);
+            TextView text = (TextView)convertView.findViewById(R.id.item_text);
 
-            icon.setImageResource(listviewitem.getIcon());
+            text.setText(listviewitem.getText());
+
             return convertView;
         }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_rest_list);
 
-        ListView listView = (ListView)findViewById(R.id.taste_list);
+        ListView listView = (ListView)findViewById(R.id.rest_list);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this,RestListActivity.class);
-                    intent.putExtra(RestListActivity.FOOD_TYPE,position);
-                    startActivity(intent);
-                    //finish()
+                Intent intent = new Intent(RestListActivity.this,RestInfoActivity.class);
+                intent.putExtra(RestInfoActivity.REST_TYPE ,position);
+                startActivity(intent);
             }
         });
         ArrayList<Listviewitem> data=new ArrayList<>();
 
-        Listviewitem lion=new Listviewitem(R.drawable.img1);
-        Listviewitem tiger=new Listviewitem(R.drawable.img2);
-        Listviewitem dog=new Listviewitem(R.drawable.img3);
+        int restNo = (Integer)getIntent().getExtras().get(FOOD_TYPE);
+
+        Listviewitem lion=new Listviewitem(String.valueOf(restNo));
+        Listviewitem tiger=new Listviewitem("BBBBBBBB");
+        Listviewitem dog=new Listviewitem("CCCCCCCC");
 
         data.add(lion);
         data.add(tiger);
         data.add(dog);
 
-        listView.setAdapter(new ListviewAdapter(this,R.layout.picture_layout,data));
+        listView.setAdapter(new ListviewAdapter(this, R.layout.rest_list_layout, data));
+
     }
 }
