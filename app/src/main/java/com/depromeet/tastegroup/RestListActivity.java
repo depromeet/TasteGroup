@@ -26,6 +26,7 @@ public class RestListActivity extends AppCompatActivity {
     private ListView listView;
     private ListviewAdapter listviewAdapter;
     private ArrayList<Listviewitem> data;
+    private ArrayList<Integer> resIds;
 
     public class Listviewitem {
         private String text;
@@ -76,7 +77,7 @@ public class RestListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(RestListActivity.this,RestInfoActivity.class);
-                intent.putExtra(RestInfoActivity.REST_TYPE ,position);
+                intent.putExtra(RestInfoActivity.REST_TYPE ,resIds.get(position));
                 startActivity(intent);
             }
         });
@@ -84,6 +85,7 @@ public class RestListActivity extends AppCompatActivity {
 
         // Display the data to the listview
         data = new ArrayList<>();
+        resIds = new ArrayList<>();
         listviewAdapter = new ListviewAdapter(this, R.layout.rest_list_layout, data);
         listView.setAdapter(listviewAdapter);
 
@@ -102,8 +104,7 @@ public class RestListActivity extends AppCompatActivity {
         }
 
         // Set up Firebase
-        Firebase.setAndroidContext(this);
-        Firebase baseRef = new Firebase("https://.firebaseio.com/");
+        Firebase baseRef = new Firebase(Constants.FIREBASE_URL);
         baseRef.child("Categories").child(foodTypeString).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -111,6 +112,8 @@ public class RestListActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Listviewitem rest = new Listviewitem(postSnapshot.getValue(String.class));
                     data.add(rest);
+                    int resId = Integer.parseInt(postSnapshot.getKey());
+                    resIds.add(resId);
                 }
                 listviewAdapter.notifyDataSetChanged();
 

@@ -8,6 +8,7 @@
 /captures
 
 # Built application files
+gradle.properties
 *.apk
 *.ap_
 *.dex

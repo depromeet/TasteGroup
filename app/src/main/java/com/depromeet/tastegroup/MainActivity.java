@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Firebase.setAndroidContext(this);
+
 
         ListView listView = (ListView)findViewById(R.id.taste_list);
 

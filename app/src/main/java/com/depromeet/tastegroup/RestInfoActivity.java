@@ -14,82 +14,53 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.firebase.client.authentication.*;
 
 import java.util.ArrayList;
 
 public class RestInfoActivity extends AppCompatActivity {
     public static final String REST_TYPE = "restType";
-    private ListView listview;
-    private ListviewAdapter listviewadapter;
-    private ArrayList<Listviewitem> data;
+    private TextView nameText;
+    private TextView phoneText;
+    private int resId;
 
-    public class Listviewitem {
-        public String text;
+    public class Restaurant {
+        private String Name;
+        private Long Telephone;
 
-        public String getText(){return text;}
-
-        public Listviewitem(String text){
-            this.text=text;
+        public Restaurant() {
+            // empty default constructor, necessary for Firebase to be able to deserialize blog posts
         }
+
+        public String getName() {
+            return this.Name;
+        }
+
+        public Long getTelephone() {
+            return this.Telephone;
+        }
+
     }
-    private class ListviewAdapter extends BaseAdapter {
-        private LayoutInflater inflater;
-        private ArrayList<Listviewitem> data;
-        private int layout;
-
-        public ListviewAdapter(Context context, int layout, ArrayList<Listviewitem> data){
-            this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            this.data=data;
-            this.layout=layout;
-        }
-        @Override
-        public int getCount(){return data.size();}
-        @Override
-        public String getItem(int position){return data.get(position).toString();}
-        @Override
-        public long getItemId(int position){return position;}
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent){
-            if(convertView==null){
-                convertView=inflater.inflate(layout,parent,false);
-            }
-            Listviewitem listviewitem=data.get(position);
-            TextView text = (TextView)convertView.findViewById(R.id.item_text);
-
-            text.setText(listviewitem.getText());
-
-            return convertView;
-        }
-    }
-    @Override
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_info);
 
-        int restNo = (Integer)getIntent().getExtras().get(REST_TYPE);
+        nameText = (TextView) findViewById(R.id.Name);
+        phoneText = (TextView) findViewById(R.id.Telephone);
+        int resId = (Integer)getIntent().getExtras().get(REST_TYPE);
+        nameText.setText(String.valueOf(resId));
 
-        listview = (ListView) findViewById(R.id.rest_info_list);
-        data = new ArrayList<>();
-        listviewadapter = new ListviewAdapter(this, R.layout.rest_list_layout, data);
-        listview.setAdapter(listviewadapter);
-
-        Firebase.setAndroidContext(this);
-        Firebase baseRef = new Firebase("https://.firebaseio.com/");
-
-
-        baseRef.child("Restaurants").child("1").child("Name").addListenerForSingleValueEvent(new ValueEventListener() {
+        Firebase baseRef = new Firebase(Constants.FIREBASE_URL);
+        baseRef.child("Restaurants").child(String.valueOf(resId)).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Listviewitem tiger=new Listviewitem(snapshot.getValue(String.class));
-                Listviewitem dog=new Listviewitem("DDDDD");
-
-                data.add(tiger);
-                data.add(dog);
-                listviewadapter.notifyDataSetChanged();
-
-                ((BaseAdapter) listview.getAdapter()).notifyDataSetChanged();
-
+                //Restaurant res = snapshot.getValue(Restaurant.class);
+                //nameText.setText("Name: " + res.getName());
+                //phoneText.setText("Telephone: " + String.valueOf(res.getTelephone()));
+                nameText.setText("Name: " + snapshot.child("Name").getValue(String.class));
+                phoneText.setText(("Telephone: " + snapshot.child("Telephone").getValue(Long.class)));
             }
 
             @Override public void onCancelled(FirebaseError error) { }
