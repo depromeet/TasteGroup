@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             this.icon=icon;
         }
     }
+
     private class ListviewAdapter extends BaseAdapter {
         private LayoutInflater inflater;
         private ArrayList<Listviewitem> data;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             return convertView;
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
