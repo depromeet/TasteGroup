@@ -13,10 +13,19 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class RestListActivity extends AppCompatActivity {
     public static final String FOOD_TYPE = "restNo";
+    private int foodType;
+    private ListView listView;
+    private ListviewAdapter listviewAdapter;
+    private ArrayList<Listviewitem> data;
 
     public class Listviewitem {
         private String text;
@@ -27,6 +36,7 @@ public class RestListActivity extends AppCompatActivity {
             this.text=text;
         }
     }
+
     private class ListviewAdapter extends BaseAdapter {
         private LayoutInflater inflater;
         private ArrayList<Listviewitem> data;
@@ -60,9 +70,8 @@ public class RestListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_list);
-
-        ListView listView = (ListView)findViewById(R.id.rest_list);
-
+        // Set up listview click
+        listView = (ListView)findViewById(R.id.rest_list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -71,19 +80,45 @@ public class RestListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ArrayList<Listviewitem> data=new ArrayList<>();
 
-        int restNo = (Integer)getIntent().getExtras().get(FOOD_TYPE);
 
-        Listviewitem lion=new Listviewitem(String.valueOf(restNo));
-        Listviewitem tiger=new Listviewitem("BBBBBBBB");
-        Listviewitem dog=new Listviewitem("CCCCCCCC");
+        // Display the data to the listview
+        data = new ArrayList<>();
+        listviewAdapter = new ListviewAdapter(this, R.layout.rest_list_layout, data);
+        listView.setAdapter(listviewAdapter);
 
-        data.add(lion);
-        data.add(tiger);
-        data.add(dog);
+        // Choose the type of food
+        foodType = (Integer)getIntent().getExtras().get(FOOD_TYPE);
+        String foodTypeString;
+        switch (foodType) {
+            case 0: foodTypeString = "Food";
+                break;
+            case 1: foodTypeString = "Alcohol";
+                break;
+            case 2: foodTypeString = "Hangover";
+                break;
+            default: foodTypeString = "Alcohol";
+                break;
+        }
 
-        listView.setAdapter(new ListviewAdapter(this, R.layout.rest_list_layout, data));
+        // Set up Firebase
+        Firebase.setAndroidContext(this);
+        Firebase baseRef = new Firebase("https://.firebaseio.com/");
+        baseRef.child("Categories").child(foodTypeString).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Listviewitem rest = new Listviewitem(postSnapshot.getValue(String.class));
+                    data.add(rest);
+                }
+                listviewAdapter.notifyDataSetChanged();
+
+                ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
+            }
+            @Override public void onCancelled(FirebaseError error) { }
+        });
+
 
     }
 }

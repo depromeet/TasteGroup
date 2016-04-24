@@ -66,27 +66,23 @@ public class RestInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_info);
 
-        Firebase.setAndroidContext(this);
         int restNo = (Integer)getIntent().getExtras().get(REST_TYPE);
 
-        Firebase baseRef = new Firebase("");
         listview = (ListView) findViewById(R.id.rest_info_list);
         data = new ArrayList<>();
         listviewadapter = new ListviewAdapter(this, R.layout.rest_list_layout, data);
         listview.setAdapter(listviewadapter);
 
+        Firebase.setAndroidContext(this);
+        Firebase baseRef = new Firebase("https://.firebaseio.com/");
 
-        baseRef.child("Name").addValueEventListener(new ValueEventListener() {
+
+        baseRef.child("Restaurants").child("1").child("Name").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                //System.out.println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
-                //tiger = new Listviewitem((String)snapshot.getValue());
-                //ListView listView = (ListView)findViewById(R.id.rest_info_list);
-                //ArrayList<Listviewitem> data=new ArrayList<>();
-                //resData.text = snapshot.getValue(String.class)
                 Listviewitem tiger=new Listviewitem(snapshot.getValue(String.class));
-                Listviewitem dog=new Listviewitem("CCCCCCCC");
+                Listviewitem dog=new Listviewitem("DDDDD");
 
                 data.add(tiger);
                 data.add(dog);
@@ -99,8 +95,5 @@ public class RestInfoActivity extends AppCompatActivity {
             @Override public void onCancelled(FirebaseError error) { }
 
         });
-
-
-
     }
 }
