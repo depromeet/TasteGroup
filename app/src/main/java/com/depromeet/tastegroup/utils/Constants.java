@@ -1,4 +1,6 @@
-package com.depromeet.tastegroup;
+package com.depromeet.tastegroup.utils;
+
+import com.depromeet.tastegroup.BuildConfig;
 
 /**
  * Created by jongwook on 4/24/2016.

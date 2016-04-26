@@ -18,13 +18,18 @@
         android:layout_marginTop="26dp"
         android:max="40"/>
 
-    <ListView
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rest_list"
-        android:divider="@android:color/white"
-        android:dividerHeight="8dp"
+        android:numColumns="2"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:gravity="center"
+        android:stretchMode="columnWidth"
         android:layout_below="@+id/seekBar"
         android:layout_marginTop="16dp"
-        />
+        android:id="@+id/rest_list" >
+
+    </GridView>
 </RelativeLayout>

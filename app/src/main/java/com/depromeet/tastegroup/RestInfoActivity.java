@@ -1,30 +1,21 @@
 package com.depromeet.tastegroup;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.firebase.client.authentication.*;
-
-import java.util.ArrayList;
 
 public class RestInfoActivity extends AppCompatActivity {
     public static final String REST_TYPE = "restType";
@@ -48,7 +39,7 @@ public class RestInfoActivity extends AppCompatActivity {
         nameText.setText(String.valueOf(resId));
 
         // Connect with Firebase and get the relevant data
-        Firebase baseRef = new Firebase(Constants.FIREBASE_URL);
+        Firebase baseRef = new Firebase(com.depromeet.tastegroup.utils.Constants.FIREBASE_URL);
         baseRef.child("Restaurants").child(String.valueOf(resId)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
