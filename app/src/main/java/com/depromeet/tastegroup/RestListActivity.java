@@ -60,8 +60,7 @@ public class RestListActivity extends AppCompatActivity {
                 convertView=inflater.inflate(layout,parent,false);
             }
             Listviewitem listviewitem=data.get(position);
-            TextView text = (TextView)convertView.findViewById(R.id.item_text);
-
+            TextView text = (TextView)convertView.findViewById(R.id.rest_text);
             text.setText(listviewitem.getText());
 
             return convertView;
@@ -86,7 +85,7 @@ public class RestListActivity extends AppCompatActivity {
         // Display the data to the listview
         data = new ArrayList<>();
         resIds = new ArrayList<>();
-        listviewAdapter = new ListviewAdapter(this, R.layout.rest_list_layout, data);
+        listviewAdapter = new ListviewAdapter(this, R.layout.restaurant_card, data);
         listView.setAdapter(listviewAdapter);
 
         // Choose the type of food
