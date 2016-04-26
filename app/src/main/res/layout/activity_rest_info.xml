@@ -9,14 +9,55 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.depromeet.tastegroup.RestInfoActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/img"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img"
+        android:id="@+id/buttons"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentStart="true">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="지도"
+            android:id="@+id/button1"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="전화"
+            android:id="@+id/button2"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="시간"
+            android:id="@+id/button3"
+            />
+
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
+        android:textStyle="bold"
         android:id="@+id/Name"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/buttons"
         android:layout_alignParentStart="true"
         android:layout_marginTop="30dp" />
 
@@ -28,13 +69,10 @@
         android:id="@+id/Telephone"
         android:layout_below="@+id/Name"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp" />
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/img"
-        android:layout_below="@+id/Telephone"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="33dp" />
+
+
+
 </RelativeLayout>

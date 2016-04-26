@@ -30,23 +30,7 @@ public class RestInfoActivity extends AppCompatActivity {
     private ImageView imgView;
     private int resId;
 
-    public class Restaurant {
-        private String Name;
-        private Long Telephone;
 
-        public Restaurant() {
-            // empty default constructor, necessary for Firebase to be able to deserialize blog posts
-        }
-
-        public String getName() {
-            return this.Name;
-        }
-
-        public Long getTelephone() {
-            return this.Telephone;
-        }
-
-    }
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +47,7 @@ public class RestInfoActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                //Restaurant res = snapshot.getValue(Restaurant.class);
-                //nameText.setText("Name: " + res.getName());
-                //phoneText.setText("Telephone: " + String.valueOf(res.getTelephone()));
-                nameText.setText("Name: " + snapshot.child("Name").getValue(String.class));
+                nameText.setText(snapshot.child("Name").getValue(String.class));
                 phoneText.setText(("Telephone: " + snapshot.child("Telephone").getValue(Long.class)));
                 byte[] decodedBytes = Base64.decode(snapshot.child("Image").getValue(String.class), 0);
                 Bitmap bitImg = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
