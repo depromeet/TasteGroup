@@ -20,34 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-<!--
-            <RadioButton
-                android:id="@+id/i_like_radiobutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:padding="10dp"
-                android:text="I Like" />
-
-            <RadioButton
-                android:id="@+id/kk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:padding="10dp"
-                android:text="I Dont Like" />
-
-            <RadioButton
-                android:id="@+id/abc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:padding="10dp"
-                android:text="I Dont Like" />-->
-
         </RadioGroup>
     </HorizontalScrollView>
 
@@ -58,7 +30,6 @@
         android:layout_below="@+id/my_scrollview"
         android:layout_marginTop="26dp"
         android:max="40"/>
-
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

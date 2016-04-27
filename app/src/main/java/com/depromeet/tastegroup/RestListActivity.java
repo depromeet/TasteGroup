@@ -3,8 +3,10 @@ package com.depromeet.tastegroup;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.StateListDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -29,7 +31,8 @@ public class RestListActivity extends AppCompatActivity {
     private GridviewAdapter gridviewAdapter;
     private ArrayList<Gridviewitem> data;
     private ArrayList<Integer> resIds;
-    private String[] foodCategory = {"전체", "고기", "중식", "분식", "기타"};
+    private RadioButton currentSelection;
+    private String[] foodCategory = {"전체", "고기", "일식", "중식", "치킨", "피자", "분식", "양식", "기타"};
     private String[] alcoholCategory = {"전체", "소주", "막걸리", "양주", "기타"};
     private String[] hangoverCategory = {"전체", "탕", "찌게", "기타"};
 
@@ -39,9 +42,16 @@ public class RestListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rest_list);
         foodType = (Integer)getIntent().getExtras().get(FOOD_TYPE);
 
-        // Playing with the radio buttons
+        // Create RadioButton Group with food type selection
+        createCategories();
+        // Get data from firebase and display the list of restaurants
+        getData();
+    }
+
+    public void createCategories() {
         RadioGroup myRadioGroup = (RadioGroup) findViewById(R.id.my_radiogroup);
-        String[] categoryList;
+        // Find out which type of foods we have
+        final String[] categoryList;
         switch (foodType) {
             case 0: categoryList = foodCategory;
                 break;
@@ -53,37 +63,45 @@ public class RestListActivity extends AppCompatActivity {
                 break;
         }
 
-
+        // Create radiobutton for each possible category
         for (int i = 0; i < categoryList.length; i++) {
             RadioButton rb = new RadioButton(this);
+            rb.setButtonDrawable(new StateListDrawable());
             rb.setText(categoryList[i]);
+            float scale = getResources().getDisplayMetrics().density;
+            int dpAsPixels = (int) (15*scale + 0.5f);
+            rb.setPadding(dpAsPixels,0,0,0);
+            rb.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+
+            // Set the "All" setting as the default value
+            if (i == 0) {
+                currentSelection = rb;
+                rb.setTypeface(null, Typeface.BOLD);
+                rb.setPaintFlags(rb.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+            }
             myRadioGroup.addView(rb);
         }
 
+        // Check when the button is clicked to change the selected setting
+        myRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
+                // Deselect the currently selected button
+                currentSelection.setTypeface(null, Typeface.NORMAL);
+                currentSelection.setPaintFlags(currentSelection.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
-        myRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup rGroup, int checkedId)
-            {
-                // This will get the radiobutton that has changed in its check state
+                // Get the new button and make it bolded and underlined
                 RadioButton checkedRadioButton = (RadioButton)rGroup.findViewById(checkedId);
-                // This puts the value (true/false) into the variable
+                currentSelection = checkedRadioButton;
                 boolean isChecked = checkedRadioButton.isChecked();
-                String currentText = (String) checkedRadioButton.getText();
-                // If the radiobutton that has changed in check state is now checked...
-                if (isChecked)
-                {
+                if (isChecked) {
                     checkedRadioButton.setTypeface(null, Typeface.BOLD);
-                    //checkedRadioButton.setPaintFlags(checkedRadioButton.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                    // Changes the textview's text to "Checked: example radiobutton text"
-                } else {
-                    checkedRadioButton.setTypeface(null, Typeface.NORMAL);
+                    checkedRadioButton.setPaintFlags(checkedRadioButton.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
                 }
             }
         });
+    }
 
-
-
+    public void getData() {
         // Set up listview click
         gridView = (GridView) findViewById(R.id.rest_list);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -133,4 +151,5 @@ public class RestListActivity extends AppCompatActivity {
             @Override public void onCancelled(FirebaseError error) { }
         });
     }
+
 }
