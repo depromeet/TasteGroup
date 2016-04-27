@@ -76,6 +76,7 @@ public class RestListActivity extends AppCompatActivity {
             // Set the "All" setting as the default value
             if (i == 0) {
                 currentSelection = rb;
+                rb.setPadding(0,0,0,0);
                 rb.setTypeface(null, Typeface.BOLD);
                 rb.setPaintFlags(rb.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
             }
