@@ -28,15 +28,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hello"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:id="@+id/rest_text"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="#소주, #고기"
-            android:textSize="15dp"
+            android:textSize="10dp"
             android:id="@+id/rest_category"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#조용, #안락"
+            android:textSize="10dp"
+            android:id="@+id/rest_atmosphere"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

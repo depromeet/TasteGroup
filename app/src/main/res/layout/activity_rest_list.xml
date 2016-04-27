@@ -8,13 +8,80 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.depromeet.tastegroup.RestListActivity">
+    <HorizontalScrollView
+        android:id="@+id/my_scrollview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:scrollbars="none" >
+        <RadioGroup
+            android:id="@+id/my_radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/i_like_radiobutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="I Like" />
+
+            <RadioButton
+                android:id="@+id/kk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="I Dont Like" />
+
+            <RadioButton
+                android:id="@+id/abc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="I Dont Like" />
+
+            <RadioButton
+                android:id="@+id/def"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="I Dont Like"/>
+
+            <RadioButton
+                android:id="@+id/i_d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="I Dont Like" />
+
+            <RadioButton
+                android:id="@+id/i_dontiobutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="I Dont Like" />
+        </RadioGroup>
+    </HorizontalScrollView>
 
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/my_scrollview"
         android:layout_marginTop="26dp"
         android:max="40"/>
 
@@ -23,13 +90,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="2"
-        android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp"
+        android:horizontalSpacing="20dp"
+        android:verticalSpacing="20dp"
         android:gravity="center"
         android:stretchMode="columnWidth"
         android:layout_below="@+id/seekBar"
         android:layout_marginTop="16dp"
         android:id="@+id/rest_list" >
-
     </GridView>
+
 </RelativeLayout>

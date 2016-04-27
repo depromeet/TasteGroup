@@ -1,12 +1,16 @@
 package com.depromeet.tastegroup;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.depromeet.tastegroup.utils.Constants;
 import com.depromeet.tastegroup.utils.GridviewAdapter;
@@ -31,6 +35,32 @@ public class RestListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_list);
+
+        // Playing with the radio buttons
+        RadioGroup myRadioGroup = (RadioGroup) findViewById(R.id.my_radiogroup);
+        myRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup rGroup, int checkedId)
+            {
+                // This will get the radiobutton that has changed in its check state
+                RadioButton checkedRadioButton = (RadioButton)rGroup.findViewById(checkedId);
+                // This puts the value (true/false) into the variable
+                boolean isChecked = checkedRadioButton.isChecked();
+                String currentText = (String) checkedRadioButton.getText();
+                // If the radiobutton that has changed in check state is now checked...
+                if (isChecked)
+                {
+                    checkedRadioButton.setTypeface(null, Typeface.BOLD);
+                    //checkedRadioButton.setPaintFlags(checkedRadioButton.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                    // Changes the textview's text to "Checked: example radiobutton text"
+                } else {
+                    checkedRadioButton.setTypeface(null, Typeface.NORMAL);
+                }
+            }
+        });
+
+
+
         // Set up listview click
         gridView = (GridView) findViewById(R.id.rest_list);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,7 +96,6 @@ public class RestListActivity extends AppCompatActivity {
         // Set up Firebase
         Firebase baseRef = new Firebase(Constants.FIREBASE_URL);
         baseRef.child("Categories").child(foodTypeString).addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
@@ -81,7 +110,5 @@ public class RestListActivity extends AppCompatActivity {
             }
             @Override public void onCancelled(FirebaseError error) { }
         });
-
-
     }
 }
