@@ -1,6 +1,8 @@
 package com.depromeet.tastegroup;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.StateListDrawable;
@@ -40,6 +42,12 @@ public class RestListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_list);
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+
+
         foodType = (Integer)getIntent().getExtras().get(FOOD_TYPE);
 
         // Create RadioButton Group with food type selection
@@ -78,6 +86,7 @@ public class RestListActivity extends AppCompatActivity {
                 currentSelection = rb;
                 rb.setPadding(0,0,0,0);
                 rb.setTypeface(null, Typeface.BOLD);
+                rb.setTextColor(Color.RED);
                 rb.setPaintFlags(rb.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
             }
             myRadioGroup.addView(rb);
@@ -88,6 +97,7 @@ public class RestListActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
                 // Deselect the currently selected button
                 currentSelection.setTypeface(null, Typeface.NORMAL);
+                currentSelection.setTextColor(Color.BLACK);
                 currentSelection.setPaintFlags(currentSelection.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
                 // Get the new button and make it bolded and underlined
@@ -96,6 +106,7 @@ public class RestListActivity extends AppCompatActivity {
                 boolean isChecked = checkedRadioButton.isChecked();
                 if (isChecked) {
                     checkedRadioButton.setTypeface(null, Typeface.BOLD);
+                    checkedRadioButton.setTextColor(Color.RED);
                     checkedRadioButton.setPaintFlags(checkedRadioButton.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
                 }
             }
