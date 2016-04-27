@@ -29,15 +29,38 @@ public class RestListActivity extends AppCompatActivity {
     private GridviewAdapter gridviewAdapter;
     private ArrayList<Gridviewitem> data;
     private ArrayList<Integer> resIds;
-
+    private String[] foodCategory = {"전체", "고기", "중식", "분식", "기타"};
+    private String[] alcoholCategory = {"전체", "소주", "막걸리", "양주", "기타"};
+    private String[] hangoverCategory = {"전체", "탕", "찌게", "기타"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_list);
+        foodType = (Integer)getIntent().getExtras().get(FOOD_TYPE);
 
         // Playing with the radio buttons
         RadioGroup myRadioGroup = (RadioGroup) findViewById(R.id.my_radiogroup);
+        String[] categoryList;
+        switch (foodType) {
+            case 0: categoryList = foodCategory;
+                break;
+            case 1: categoryList = alcoholCategory;
+                break;
+            case 2: categoryList = hangoverCategory;
+                break;
+            default: categoryList = alcoholCategory;
+                break;
+        }
+
+
+        for (int i = 0; i < categoryList.length; i++) {
+            RadioButton rb = new RadioButton(this);
+            rb.setText(categoryList[i]);
+            myRadioGroup.addView(rb);
+        }
+
+
         myRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             public void onCheckedChanged(RadioGroup rGroup, int checkedId)
@@ -80,7 +103,6 @@ public class RestListActivity extends AppCompatActivity {
         gridView.setAdapter(gridviewAdapter);
 
         // Choose the type of food
-        foodType = (Integer)getIntent().getExtras().get(FOOD_TYPE);
         String foodTypeString;
         switch (foodType) {
             case 0: foodTypeString = "Food";

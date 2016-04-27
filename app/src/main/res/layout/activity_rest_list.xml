@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
+<!--
             <RadioButton
                 android:id="@+id/i_like_radiobutton"
                 android:layout_width="wrap_content"
@@ -46,34 +46,8 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:padding="10dp"
-                android:text="I Dont Like" />
+                android:text="I Dont Like" />-->
 
-            <RadioButton
-                android:id="@+id/def"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:padding="10dp"
-                android:text="I Dont Like"/>
-
-            <RadioButton
-                android:id="@+id/i_d"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:padding="10dp"
-                android:text="I Dont Like" />
-
-            <RadioButton
-                android:id="@+id/i_dontiobutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:padding="10dp"
-                android:text="I Dont Like" />
         </RadioGroup>
     </HorizontalScrollView>
 
