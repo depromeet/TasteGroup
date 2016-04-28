@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,13 +87,13 @@ public class MainActivity extends AppCompatActivity {
         });
         ArrayList<Listviewitem> data=new ArrayList<>();
 
-        Listviewitem lion=new Listviewitem(R.drawable.img1);
-        Listviewitem tiger=new Listviewitem(R.drawable.img2);
-        Listviewitem dog=new Listviewitem(R.drawable.img3);
+        Listviewitem foodItem=new Listviewitem(R.drawable.food);
+        Listviewitem alcoholItem=new Listviewitem(R.drawable.alcohol);
+        Listviewitem hangoverItem=new Listviewitem(R.drawable.hangover);
 
-        data.add(lion);
-        data.add(tiger);
-        data.add(dog);
+        data.add(foodItem);
+        data.add(alcoholItem);
+        data.add(hangoverItem);
 
         listView.setAdapter(new ListviewAdapter(this,R.layout.picture_layout,data));
     }
