@@ -119,9 +119,10 @@ public class RestListActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(RestListActivity.this,RestInfoActivity.class);
-                intent.putExtra(RestInfoActivity.REST_TYPE ,resIds.get(position));
-                startActivity(intent);
+                //Intent intent = new Intent(RestListActivity.this,RestInfoActivity.class);
+                //intent.putExtra(RestInfoActivity.REST_TYPE ,resIds.get(position));
+                //startActivity(intent);
+                startActivity((new Intent(RestListActivity.this, RestInfoActivity.class).putExtra(RestInfoActivity.REST_TYPE, resIds.get(position))));
             }
         });
 
